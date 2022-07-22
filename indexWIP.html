@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>slider demo</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="main.css">
+    <style>
+        #slider {
+            margin: 10px;
+        }
+
+    </style>
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!--    <script src="https://d3js.org/d3.v4.js"></script>-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+
+<body>
+    <div>
+        <img src="assets/images/SHA-Logo-Horz-2020-RDGRY.png" style="width: 200px; margin: 50px;">
+    </div>
+
+    <!--<div class='cf'>
+        <img class="bottom" src="assets/images/InTouch-Vision%20Zone.jpg" />
+        <img class="top" src="assets/images/Element-Vision%20Zone.jpg" />
+        <img class="bottom" src="assets/images/AUT-2-Vision%20Zone.jpg">
+        <img class="bottom" src="assets/images/AUT-3-Vision%20Zone.jpg">
+
+    </div>-->
+    <div class="image-container">Autograph Intelligence Lens Simulator PoC
+        <div class="slide">
+            <div class="slideNumber">1</div>
+            <img src="assets/images/1up.jpg">
+        </div>
+        <div class="slide">
+            <div class="slideNumber">2</div>
+            <img src="assets/images/15up.jpg">
+        </div>
+        <div class="slide">
+            <div class="slideNumber">3</div>
+            <img src="assets/images/2up.jpg">
+        </div>
+        <div class="slide">
+            <div class="slideNumber">4</div>
+            <img src="assets/images/25up.jpg">
+        </div>
+
+        <!-- Next and Previous icon to change images -->
+        <div id="slider"></div>
+        <div style="text-align:center" style="visibility:hidden">
+            <span class="footerdot" onclick="activeSlide(1)">
+            </span>
+            <span class="footerdot" onclick="activeSlide(2)">
+            </span>
+            <span class="footerdot" onclick="activeSlide(3)">
+            </span>
+            <span class="footerdot" onclick="activeSlide(4)">
+            </span>
+        </div>
+        <div id="amount">0
+        </div>
+        <div id="indexandvalue">0
+        </div>
+        <div class="chartWithMarkerOverlay">
+            <div id="chart_div" width="1000px" height="1000px"></div>
+            <div id="logo" class="overlay-marker">
+                <img src="assets/images/shamirLogo.png" height="50">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* 
+                function InitChart() {
+
+                    var barData = [{
+                        'x': -1,
+                        'y': -1
+                    }, {
+                        'x': 0,
+                        'y': -0.5
+                    }, {
+                        'x': 0,
+                        'y': 0
+                    }, {
+                        'x': 1,
+                        'y': 0.5
+                    }, {
+                        'x': 1,
+                        'y': 1
+                    }, {
+                        'x': 2,
+                        'y': 2
+                    }];
+
+                    var vis = d3.select('#visualisation'),
+                        WIDTH = 1000,
+                        HEIGHT = 500,
+                        MARGINS = {
+                            top: 20,
+                            right: 20,
+                            bottom: 20,
+                            left: 50
+                        },
+                        xRange = d3.scaleLinear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([d3.min(barData, function(d) {
+                                return d.x;
+                            }),
+                            d3.max(barData, function(d) {
+                                return d.x;
+                            })
+                        ]),
+
+                        yRange = d3.scaleLinear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([d3.min(barData, function(d) {
+                                return d.y;
+                            }),
+                            d3.max(barData, function(d) {
+                                return d.y;
+                            })
+                        ]),
+
+                        xAxis = d3.axisBottom(xRange),
+                        yAxis = d3.axisLeft(yRange);
+
+
+                    vis.append('svg:g')
+                        .attr('class', 'x axis')
+                        .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+                        .call(xAxis);
+
+                    vis.append('svg:g')
+                        .attr('class', 'y axis')
+                        .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+                        .call(yAxis);
+
+                    vis.append('line')
+                        .style("stroke", "red")
+                        .attr("x1", 0)
+                        .attr("y1", 0)
+                        .attr("x2", 1.5)
+                        .attr("y2", 0);
+
+                    var lineFunction = d3.line()
+                        .x(function(d) {
+                            return xRange(d.x);
+                        })
+                        .y(function(d) {
+                            return yRange(d.y);
+                        })
+                        .curve(d3.curveLinear);
+                    var lineGraph = vis.append("path")
+                        .attr("d", lineFunction(barData))
+                        .attr("stroke", "blue")
+                        .attr("stroke-width", 3)
+                        .attr("fill", "none");
+
+                    vis.append("g")
+                        .attr("class", "grid")
+                        .attr("transform", "translate(0," + height + ")")
+                        .call(make_x_axis()
+                            .tickSize(-height, 0, 0)
+                            .tickFormat("")
+                        )
+
+                    vis.append("g")
+                        .attr("class", "grid")
+                        .call(make_y_axis()
+                            .tickSize(-width, 0, 0)
+                            .tickFormat("")
+                        )
+
+                };
+
+                function make_x_axis() {
+                    return d3.svg.axis()
+                        .scale(x)
+                        .orient("bottom")
+                        .ticks(5)
+                }
+
+                function make_y_axis() {
+                    return d3.svg.axis()
+                        .scale(y)
+                        .orient("left")
+                        .ticks(5)
+                }
+                InitChart();*/
+
+        var chart;
+        var data;
+        google.charts.load("current", {
+            packages: ["corechart"]
+        });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            console.log("called drawChart");
+            data = new google.visualization.DataTable();
+            data.addColumn('number', 'X');
+            data.addColumn('number', 'Y');
+
+            data.addRows([
+                [-1.0, -1.5],
+                [0, -1.25],
+                [0.5, 1],
+                [1.25, 2.5],
+
+            ]);
+
+
+
+            var options = {
+                //                legend: 'none',
+                hAxis: {
+                    maxValue: 3,
+                    minValue: -3,
+                    title: 'X'
+                },
+                vAxis: {
+                    maxValue: 3,
+                    minValue: -3,
+                    title: 'Y'
+                },
+                lineWidth: 3,
+                colors: ['blue'],
+                animation: {
+                    duration: 1000,
+                    easing: 'out',
+                    startup: 'true'
+                },
+                width: "100%",
+                height: "100%",
+                legend: 'left',
+                title: 'Power Profile',
+                is3D: true,
+                chartArea: {
+                    left: 30,
+                    top: 30
+                }
+            };
+
+            function placeMarker(dataTable, cel) {
+                var cli = this.getChartLayoutInterface();
+                var chartArea = cli.getChartAreaBoundingBox();
+
+                //document.querySelector('.overlay-marker').style.top = Math.floor(cli.getYLocation(dataTable.getValue(0, 1))) - 22 + "px";
+                //document.querySelector('.overlay-marker').style.left = Math.floor(cli.getXLocation(dataTable.getValue(0, 0))) - 22 + "px";
+
+                var img = document.getElementById('logo');
+                var thisY = ((cli.getYLocation(dataTable.getValue(0, 1)) - 22));
+                var thisX = ((cli.getXLocation(dataTable.getValue(0, 0)) - 22));
+                translate(img, thisX, thisY);
+
+
+                console.log(cli.getYLocation(dataTable.getValue(1, 1)));
+                console.log(cli.getXLocation(dataTable.getValue(1, 0)));
+                console.log("document.querySelector('.overlay-marker').style.left = " + document.querySelector('.overlay-marker').style.left);
+            }
+
+
+
+            chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+            google.visualization.events.addListener(chart, 'ready',
+                placeMarker.bind(chart, data));
+            console.log("called placeMarker");
+            chart.draw(data, options);
+
+
+
+        };
+        $("#slider").slider();
+        $(function() {
+            $("#slider").slider({
+                value: 1,
+                min: 1,
+                max: 4,
+                step: 1,
+                slide: function(event, ui) {
+                    $("#amount").text(ui.value);
+                    //drawChart();
+                    //placeMarker();
+                    var totalslides2 =
+                        document.getElementsByClassName("slide");
+                    for (i = 0; i < totalslides2.length; i++) {
+                        totalslides2[i].style.display = "none";
+                        //totalslides2[i].style.animation = "fadein 1s ease-in";
+                    }
+                    //totalslides2[((ui.value) - 1)].style.zIndex = (totalslides2[((ui.value) - 1)].style.zIndex)+4;
+                    totalslides2[((ui.value) - 1)].style.display = "block";
+                    //totalslides2[((ui.value) - 1)].style.animation = "fadein 1s ease-in";
+
+
+                    let index = $(ui.handle).index()
+                    $('#indexandvalue').text("DEBUG value: " + ui.value + ", index: " + index);
+                    //drawChart.moveMarker(ui.value);
+                    var cli = chart.getChartLayoutInterface();
+                    var chartArea = cli.getChartAreaBoundingBox();
+                    var dIndex = ((ui.value) - 1);
+                    //document.querySelector('.overlay-marker').style.top = Math.floor(cli.getYLocation(data.getValue(dIndex, 1))) - 22 + "px";
+                    //document.querySelector('.overlay-marker').style.left = Math.floor(cli.getXLocation(data.getValue(dIndex, 0))) - 22 + "px";
+                    var img2 = document.getElementById('logo');
+                    var thisY = Math.floor(cli.getYLocation(data.getValue(dIndex, 1))) - 22;
+                    var thisX = Math.floor(cli.getXLocation(data.getValue(dIndex, 0))) - 22;
+                    translate(img2, thisX, thisY);
+                },
+                change: function(event, ui) {
+
+                }
+            });
+            $("#amount").text($("#slider").slider("value"));
+        });
+        var slideIndex = 1;
+
+        displaySlide(slideIndex);
+
+        var totalslides =
+            document.getElementsByClassName("slide");
+
+        function moveSlides(n) {
+            displaySlide(slideIndex += n);
+        }
+
+        function activeSlide(n) {
+            displaySlide(slideIndex = n);
+        }
+
+        //Main function 
+        function displaySlide(n) {
+            var i;
+            var totalslides =
+                document.getElementsByClassName("slide");
+            var totaldots =
+                document.getElementsByClassName("footerdot");
+
+            if (n > totalslides.length) {
+                slideIndex = 1;
+            }
+
+            if (n < 1) {
+                slideIndex = totalslides.length;
+            }
+            for (i = 0; i < totalslides.length; i++) {
+                totalslides[i].style.display = "none";
+            }
+            for (i = 0; i < totaldots.length; i++) {
+                totaldots[i].className = totaldots[i].className.replace(" active", "");
+            }
+            totalslides[slideIndex - 1].style.display = "block";
+            totaldots[slideIndex - 1].className += " active";
+            $('#slider').slider('value', n);
+        };
+
+        function translate(elem, x, y) {
+            var left = parseInt(css(elem, 'left'), 10),
+                top = parseInt(css(elem, 'top'), 10),
+                dx = left - x,
+                dy = top - y,
+                i = 1,
+                count = 20,
+                delay = 20;
+
+            function loop() {
+                if (i >= count) {
+                    return;
+                }
+                i += 1;
+                elem.style.left = (left - (dx * i / count)).toFixed(0) + 'px';
+                elem.style.top = (top - (dy * i / count)).toFixed(0) + 'px';
+                setTimeout(loop, delay);
+            }
+
+            loop();
+        }
+
+        function css(element, property) {
+            return window.getComputedStyle(element, null).getPropertyValue(property);
+        }
+
+    </script>
+
+</body>
+
+</html>

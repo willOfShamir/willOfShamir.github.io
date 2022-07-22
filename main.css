@@ -1,0 +1,171 @@
+<style > img {
+    width: 100%;
+    font-family: sans-serif;
+}
+
+@-webkit-keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+body {
+    font-family: sans-serif;
+}
+
+.height {
+    height: 10px;
+}
+
+/* Image-container design */
+.image-container {
+    max-width: 800px;
+    position: relative;
+    margin: auto;
+}
+
+.next {
+    right: 0;
+}
+
+/* Next and previous icon design */
+.previous,
+.next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    padding: 10px;
+    margin-top: -25px;
+}
+
+/* caption decorate */
+.captionText {
+    color: #000000;
+    font-size: 14px;
+    position: absolute;
+    padding: 12px 12px;
+    bottom: 8px;
+    width: 100%;
+    text-align: center;
+}
+
+/*.slide {
+    -webkit-animation: fadein 1s ease-in alternate infinite;
+    -moz-animation: fadein 1s ease-in alternate infinite;
+    animation: fadein 1s ease-in alternate infinite;
+}*/
+
+/* Slider image number */
+.slideNumber {
+    font-family: sans-serif;
+    background-color: #FF0000;
+    color: white;
+    border-radius: 25px;
+    right: 0;
+    opacity: .5;
+    margin: 5px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px;
+    position: absolute;
+
+}
+
+.fa {
+    font-size: 32px;
+}
+
+.fa:hover {
+    transform: rotate(360deg);
+    transition: 1s;
+    color: white;
+}
+
+.footerdot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbbbbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.5s ease;
+}
+
+.active,
+.footerdot:hover {
+    background-color: black;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #777;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    font-family: 'Arial';
+    font-size: 13px;
+}
+
+.tick {
+    stroke-dasharray: 1, 2;
+}
+
+.bar {
+    fill: FireBrick;
+}
+
+.grid .tick {
+    stroke: lightgrey;
+    opacity: 0.7;
+}
+
+.grid path {
+    stroke-width: 0;
+}
+
+.overlay-marker {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 53px;
+    /* chartArea top */
+    left: 528px;
+    /* chartArea left */
+}
+
+.chartWithMarkerOverlay {
+    text-align: left;
+    position: relative;
+    left: 50px;
+    /*width: 700px;*/
+
+}
